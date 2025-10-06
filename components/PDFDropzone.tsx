@@ -1,5 +1,6 @@
 "use client";
 
+import { uploadPDF } from "@/actions/uploadPDF";
 import { useUser } from "@clerk/clerk-react";
 import {
   DndContext,
@@ -10,11 +11,12 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
+import { AlertCircle, CheckCircle, CloudUpload } from "lucide-react";
+import { Button } from "./ui/button";
 
 function PDFDropzone() {
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadedFiles\
-    , setUploadedFiles] = useState<string[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   //   const [canUpload, setCanUpload] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,7 +52,7 @@ function PDFDropzone() {
 
       setIsUploading(true);
       try {
-        // Uploadinf files logic
+        // Uploading files logic
         const newUploadedFiles: string[] = [];
 
         for (const file of pdfFiles) {
@@ -108,8 +110,21 @@ function PDFDropzone() {
     [user, handleUpload],
   );
 
-  //   const canUpload = isUserSignedIn && isFeatureEnabled;
-  const canUpload = true;
+  const handleFileInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files?.length) {
+        handleUpload(e.target.files);
+      }
+    },
+    [handleUpload],
+  );
+
+  const triggerFileInput = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const isUserSignedIn = !!user;
+  const canUpload = isUserSignedIn && isFeatureEnabled;
 
   return (
     <DndContext sensors={sensors}>
@@ -121,7 +136,71 @@ function PDFDropzone() {
           className={`border-2 roulded-lg border-dashed p-8 text-center transition-colors
             ${isDraggingOver ? "border-blue-500 bg-blue-50" : "border-gray-300"}
             ${!canUpload ? "opacity-70 cursor-not-allowed" : ""}`}
-        ></div>
+        >
+          {isUploading ? (
+            <div className="flex flex-col items-center">
+              <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500 md-2"></div>
+              <p>Uploading...</p>
+            </div>
+          ) : !isUserSignedIn ? (
+            <>
+              <CloudUpload className="mx-auto w-12 h-12 text-gray-400" />
+              <p className="mt-2 text-sm text-gray-600">
+                Please sign in to upload PDF receipts.
+              </p>
+            </>
+          ) : (
+            <>
+              <CloudUpload className="mx-auto w-12 h-12 text-gray-400" />
+              <p className="mt-2 text-sm test-gray-600 ">
+                Drag and drop PDF files here, or click to select files
+              </p>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="application/pdf"
+                multiple
+                onChange={handleFileInputChange}
+                className="hidden"
+                disabled={!canUpload}
+              />
+              <Button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer
+              disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!isFeatureEnabled || isUploading}
+                onClick={triggerFileInput}
+              >
+                {isFeatureEnabled ? "Select Files" : "Upgrade to Upload"}
+              </Button>
+            </>
+          )}
+        </div>
+
+        <div className="mt-4">
+          {featureUsageExceeded && (
+            <div className="flex items-center p-3 bg-red-50 border border-red-200 rounded-md text-red-600">
+              <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0" />
+              <span>
+                You have exceeded your limit of {featureAllocation} scans.
+                Kindly upgrade to continuwe using this feature.
+              </span>
+            </div>
+          )}
+        </div>
+
+        {uploadedFiles.length > 0 && (
+          <div className="mt-4">
+            <h3 className="font-medium">Uploaded files:</h3>
+            <ul className="mt-2 text-sm text-gray-600 space-y-1">
+              {uploadedFiles.map((fileName, index) => (
+                <li key={index} className="flex items-center">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
+                  {fileName}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </DndContext>
   );
