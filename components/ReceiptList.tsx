@@ -61,7 +61,8 @@ function ReceiptList() {
               <TableHead>Uploaded</TableHead>
               <TableHead>Size</TableHead>
               <TableHead>Total</TableHead>
-              <TableHead className="w-[40px]">Status</TableHead>
+              <TableHead>Total</TableHead>
+              <TableHead className="w-[40px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -84,7 +85,7 @@ function ReceiptList() {
                 <TableCell>
                   {receipt.transactionAmount
                     ? `${receipt.currency} ${receipt.currency}` || ""
-                    : "- "}
+                    : "-"}
                 </TableCell>
                 <TableCell>
                   {
@@ -97,7 +98,8 @@ function ReceiptList() {
                             : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {receipt.status}
+                      {receipt.status.charAt(0).toUpperCase() +
+                        receipt.status.slice(1)}
                     </span>
                   }
                 </TableCell>
