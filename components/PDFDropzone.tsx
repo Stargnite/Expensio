@@ -8,7 +8,7 @@ import {
   useSensors,
   PointerSensor,
 } from "@dnd-kit/core";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSchematicEntitlement } from "@schematichq/schematic-react";
 import { AlertCircle, CheckCircle, CloudUpload } from "lucide-react";
@@ -25,7 +25,6 @@ function PDFDropzone() {
   const {
     value: isFeatureEnabled,
     featureUsageExceeded,
-    featureUsage,
     featureAllocation,
   } = useSchematicEntitlement("scans");
 

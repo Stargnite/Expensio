@@ -6,7 +6,6 @@ import { useUser } from "@clerk/nextjs";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
