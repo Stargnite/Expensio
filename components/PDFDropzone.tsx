@@ -164,7 +164,7 @@ function PDFDropzone() {
                 disabled={!canUpload}
               />
               <Button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer
+                className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 shadow-sm text-white rounded cursor-pointer
               disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!isFeatureEnabled || isUploading}
                 onClick={triggerFileInput}

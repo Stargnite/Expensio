@@ -4,8 +4,8 @@ import {
   ArrowRight,
   BarChart,
   Check,
+  Receipt,
   Search,
-  Shield,
   Upload,
 } from "lucide-react";
 import Link from "next/link";
@@ -14,23 +14,25 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-blue-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <section className="py-20 md:py-28 bg-red-50 dark:from-gray-900 dark:to-gray-800">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center  space-y-4 text-center">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                Intelligent Scanning
+                Keep Track of all your Receipts
               </h1>
               <p className="mx-auto max-w-[700px] text-gray-500 md:text-lg dark:text-gray-400">
-                Scan, organize and analyze your receipts with AI-powered
+                {/* Scan, organize and analyze your receipts with AI-powered
                 precision. Save time and gain insights from your expenses
-                effortlessly.
+                effortlessly. */}
+                Effortlessly scan, organize, and analyze your receipts with AI
+                precision — turning your expenses into actionable insights.
               </p>
             </div>
 
             <div className="space-x-4">
               <Link href="/receipts">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-red-600 hover:bg-red-700 text-white shadow-sm">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -203,10 +205,10 @@ export default function Home() {
 
             {/* Pro Tier */}
             <div
-              className="flex flex-col p-6 bg-blue-50 border  border-blue-200 relative rounded-lg shadow-sm dark:border-border-900
+              className="flex flex-col p-6 bg-red-50 border  border-red-200 relative rounded-lg shadow-sm dark:border-border-900
             dark:bg-blue-950"
             >
-              <div className="absolute -top-3 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <div className="absolute -top-3 right-4 bg-red-700 text-white px-3 py-1 rounded-full text-sm font-medium">
                 Popular
               </div>
               <div className="space-y-2">
@@ -277,9 +279,15 @@ export default function Home() {
         <div className="container px-4 md:px-6 py-8 mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-1">
+              <Receipt className="w-6 h-6 text-red-600 mr-2 group-hover:text-red-700 transition-colors" />
+              <h1 className="text-xl font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
+                AcountaAI
+              </h1>
+            </div>
+            {/* <div className="flex items-center space-x-1">
               <Shield className="h-6 w-6 text-blue-600" />
               <span className="text-xl font-semibold">Expensio</span>
-            </div>
+            </div> */}
             <div className="mt-4 md:mt-0">
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 Expensio. The smarter way to track your money. &copy; 2025 All
